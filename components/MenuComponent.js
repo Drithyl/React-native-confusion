@@ -1,8 +1,7 @@
 
 import React, { Component } from "react";
-import { View, Flatlist } from "react-native";
+import { View, FlatList } from "react-native";
 import { ListItem } from "react-native-elements";
-import { FlatList } from "react-native-gesture-handler";
 
 //functional component
 function Menu(props)
@@ -23,6 +22,7 @@ function Menu(props)
         title={item.name}
         subtitle={item.description}
         hideChevron={true}
+        onPress={() => props.onPress(item.id)}
         leftAvatar={{ source: require("./images/uthappizza.png") }}
       />
     );
