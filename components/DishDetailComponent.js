@@ -2,6 +2,7 @@
 import React, { Component } from "react";
 import { View, Text } from "react-native";
 import { Card } from "react-native-elements";
+import { DISHES } from "../shared/dishes";
 
 //functional component
 function RenderDish(props)
@@ -27,11 +28,32 @@ function RenderDish(props)
   );
 }
 
-function DishDetail(props)
+class DishDetail extends Component
 {
-  return (
-    <RenderDish dish={props.dish} />
-  );
+  constructor(props)
+  {
+    super(props);
+    this.state =
+    {
+      dishes: DISHES
+    };
+  }
+
+  static navigationOptions =
+  {
+    title: "Dish Details"
+  }
+
+  render()
+  {
+    //extract the parameter that we passed in as data in the MenuComponent.js
+    //navigate object. Second parameter is a fallback/default value.
+    const dishId = this.props.navigation.getParam("dishId", "");
+
+    return (
+      <RenderDish dish={this.state.dishes.find((dish) => dish.id === +dishId)} />
+    );
+  }
 }
 
 export default DishDetail;
