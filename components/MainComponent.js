@@ -1,14 +1,12 @@
 
 import React, { Component } from "react";
 import { View, Platform } from "react-native";
-import { createStackNavigator, createAppContainer } from "react-navigation";
-
-//import data
-import { DISHES } from "../shared/dishes.js";
+import { createStackNavigator, createDrawerNavigator, createAppContainer } from "react-navigation";
 
 //import components
 import Menu from "./MenuComponent";
 import DishDetail from "./DishDetailComponent";
+import Home from "./HomeComponent";
 
 //specify screens to navigate through in the first parameter, in the form
 //of a JS Object. This is essentially a new component.
@@ -29,22 +27,60 @@ const MenuNavigator = createStackNavigator({
   }
 });
 
-//In React-native 3, an explicit navigator container must be declared.
-//In v2 the above MenuNavigator represented a container in and of itself,
-//so it could be included with <MenuNavigator />, but not anymore. This
-//MenuNavigatorContainer wraps the MenuNavigator and is used like <MenuNavigatorContainer />
-const MenuNavigatorContainer = createAppContainer(MenuNavigator);
+
+const HomeNavigator = createStackNavigator({
+  Home: { screen: Home }
+},
+//navigation options in the second parameter
+{
+  navigationOptions: {
+    backgroundColor: "#512DA8"
+  },
+
+  headerTintColor: "#fff",
+  headerTitleStyle: {
+    color: "#fff"
+  }
+});
+
+const MainNavigator = createDrawerNavigator({
+  Home:
+  {
+    screen: HomeNavigator,
+    navigationOptions:
+    {
+      title: "Home",
+      drawerLabel: "Home"
+    }
+  },
+
+  Menu:
+  {
+    screen: MenuNavigator,
+    navigationOptions:
+    {
+      title: "Menu",
+      drawerLabel: "Menu"
+    }
+  }
+},
+{
+  drawerBackgroundColor: "#D1C4E9"
+});
+
+//In react-navigation v3, an explicit navigator container must be declared.
+//In v2 the above MainNavigator represented a container in and of itself,
+//so it could be included with <MainNavigator />, but not anymore. This
+//MainNavigatorContainer wraps the MainNavigator and is used like <MainNavigatorContainer />
+//It also acts as a container for the child elements, Menu and HomeContainers.
+//See https://stackoverflow.com/questions/53367195/invariant-violation-the-navigation-prop-is-missing-for-this-navigator
+const MainNavigatorContainer = createAppContainer(MainNavigator);
 
 class Main extends Component
 {
   constructor(props)
   {
     super(props);
-    this.state =
-    {
-      dishes: DISHES,
-      selectedDish: null
-    };
   }
 
   onDishSelect(dishId)
@@ -58,7 +94,7 @@ class Main extends Component
       //onPress is the event for when a user presses on an element
       //If platform is Android, we will give enough space at the top for the statusBar
       <View style={{ flex: 1, paddingTop: Platform.OS ==="ios" ? 0 : Expo.Constants.statusBarHeight }}>
-        <MenuNavigatorContainer />
+        <MainNavigatorContainer />
       </View>
     );
   }
