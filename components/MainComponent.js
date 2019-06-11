@@ -7,6 +7,8 @@ import { createStackNavigator, createDrawerNavigator, createAppContainer } from 
 import Menu from "./MenuComponent";
 import DishDetail from "./DishDetailComponent";
 import Home from "./HomeComponent";
+import Contact from "./ContactComponent";
+import About from "./AboutComponent";
 
 //specify screens to navigate through in the first parameter, in the form
 //of a JS Object. This is essentially a new component.
@@ -31,7 +33,34 @@ const MenuNavigator = createStackNavigator({
 const HomeNavigator = createStackNavigator({
   Home: { screen: Home }
 },
-//navigation options in the second parameter
+{
+  navigationOptions: {
+    backgroundColor: "#512DA8"
+  },
+
+  headerTintColor: "#fff",
+  headerTitleStyle: {
+    color: "#fff"
+  }
+});
+
+const AboutNavigator = createStackNavigator({
+  About: { screen: About }
+},
+{
+  navigationOptions: {
+    backgroundColor: "#512DA8"
+  },
+
+  headerTintColor: "#fff",
+  headerTitleStyle: {
+    color: "#fff"
+  }
+});
+
+const ContactNavigator = createStackNavigator({
+  Contact: { screen: Contact }
+},
 {
   navigationOptions: {
     backgroundColor: "#512DA8"
@@ -54,6 +83,16 @@ const MainNavigator = createDrawerNavigator({
     }
   },
 
+  About:
+  {
+    screen: AboutNavigator,
+    navigationOptions:
+    {
+      title: "About Us",
+      drawerLabel: "About Us"
+    }
+  },
+
   Menu:
   {
     screen: MenuNavigator,
@@ -61,6 +100,16 @@ const MainNavigator = createDrawerNavigator({
     {
       title: "Menu",
       drawerLabel: "Menu"
+    }
+  },
+
+  Contact:
+  {
+    screen: ContactNavigator,
+    navigationOptions:
+    {
+      title: "Contact Us",
+      drawerLabel: "Contact Us"
     }
   }
 },
