@@ -1,7 +1,8 @@
 
 import React, { Component } from "react";
-import { View, Platform } from "react-native";
-import { createStackNavigator, createDrawerNavigator, createAppContainer } from "react-navigation";
+import { View, Platform, Image, StyleSheet, ScrollView, Text } from "react-native";
+import { createStackNavigator, createDrawerNavigator, DrawerItems, SafeAreaView } from "react-navigation";
+import { Icon } from 'react-native-elements';
 
 //import components
 import Menu from "./MenuComponent";
@@ -19,14 +20,25 @@ const MenuNavigator = createStackNavigator({
 //navigation options in the second parameter
 {
   initialRouteName: "Menu",
-  navigationOptions: {
-    backgroundColor: "#512DA8"
-  },
-
-  headerTintColor: "#fff",
-  headerTitleStyle: {
-    color: "#fff"
-  }
+  //can make navigationOptions into a function which gets the
+  //navigation props as parameters. Return a JS Object with the
+  //headerLeft property given an Icon
+  navigationOptions: ({ navigation }) => ({
+    headerStyle: {
+      backgroundColor: "#512DA8"
+    },
+    headerTintColor: "#fff",
+    headerTitleStyle: {
+      color: "#fff"
+    },
+    headerLeft:
+    <Icon
+      name="menu"
+      size={24}
+      color="white"
+      onPress={() => navigation.toggleDrawer()}
+    />
+  })
 });
 
 
@@ -34,52 +46,109 @@ const HomeNavigator = createStackNavigator({
   Home: { screen: Home }
 },
 {
-  navigationOptions: {
-    backgroundColor: "#512DA8"
-  },
-
-  headerTintColor: "#fff",
-  headerTitleStyle: {
-    color: "#fff"
-  }
+  navigationOptions: ({ navigation }) => ({
+    headerStyle: {
+      backgroundColor: "#512DA8"
+    },
+    headerTintColor: "#fff",
+    headerTitleStyle: {
+      color: "#fff"
+    },
+    headerLeft:
+    <Icon
+      name="menu"
+      size={24}
+      color="white"
+      onPress={() => navigation.toggleDrawer()}
+    />
+  })
 });
 
 const AboutNavigator = createStackNavigator({
   About: { screen: About }
 },
 {
-  navigationOptions: {
-    backgroundColor: "#512DA8"
-  },
-
-  headerTintColor: "#fff",
-  headerTitleStyle: {
-    color: "#fff"
-  }
+  navigationOptions: ({ navigation }) => ({
+    headerStyle: {
+      backgroundColor: "#512DA8"
+    },
+    headerTintColor: "#fff",
+    headerTitleStyle: {
+      color: "#fff"
+    },
+    headerLeft:
+    <Icon
+      name="menu"
+      size={24}
+      color="white"
+      onPress={() => navigation.toggleDrawer()}
+    />
+  })
 });
 
 const ContactNavigator = createStackNavigator({
   Contact: { screen: Contact }
 },
 {
-  navigationOptions: {
-    backgroundColor: "#512DA8"
-  },
-
-  headerTintColor: "#fff",
-  headerTitleStyle: {
-    color: "#fff"
-  }
+  navigationOptions: ({ navigation }) => ({
+    headerStyle: {
+      backgroundColor: "#512DA8"
+    },
+    headerTintColor: "#fff",
+    headerTitleStyle: {
+      color: "#fff"
+    },
+    headerLeft:
+    <Icon
+      name="menu"
+      size={24}
+      color="white"
+      onPress={() => navigation.toggleDrawer()}
+    />
+  })
 });
+
+const CustomDrawerContentComponent = (props) => (
+
+  <ScrollView>
+    {/* specifically for the iPhone X */}
+    <SafeAreaView
+      style={styles.container}
+      forceInset={{ top: "always", horizontal: "never" }}
+    >
+      <View style={styles.drawerHeader}>
+        <View style={{flex: 1}}>
+          <Image
+            source={require("./images/logo.png")}
+            style={styles.drawerImage}
+          />
+        </View>
+
+        <View style={{flex: 2}}>
+          <Text style={styles.drawerHeaderText}>Ristorante Con Fusion</Text>
+        </View>
+      </View>
+
+      <DrawerItems {...props} />
+    </SafeAreaView>
+  </ScrollView>
+);
 
 const MainNavigator = createDrawerNavigator({
   Home:
   {
     screen: HomeNavigator,
-    navigationOptions:
-    {
+    navigationOptions: {
       title: "Home",
-      drawerLabel: "Home"
+      drawerLabel: "Home",
+      drawerIcon: ({ tintColor }) =>
+      (
+        <Icon name="home"
+              type="font-awesome"
+              size={24}
+              color={tintColor}
+        />
+      )
     }
   },
 
@@ -89,7 +158,15 @@ const MainNavigator = createDrawerNavigator({
     navigationOptions:
     {
       title: "About Us",
-      drawerLabel: "About Us"
+      drawerLabel: "About Us",
+      drawerIcon: ({ tintColor }) =>
+      (
+        <Icon name="info-circle"
+              type="font-awesome"
+              size={24}
+              color={tintColor}
+        />
+      )
     }
   },
 
@@ -99,7 +176,15 @@ const MainNavigator = createDrawerNavigator({
     navigationOptions:
     {
       title: "Menu",
-      drawerLabel: "Menu"
+      drawerLabel: "Menu",
+      drawerIcon: ({ tintColor }) =>
+      (
+        <Icon name="list"
+              type="font-awesome"
+              size={24}
+              color={tintColor}
+        />
+      )
     }
   },
 
@@ -109,21 +194,23 @@ const MainNavigator = createDrawerNavigator({
     navigationOptions:
     {
       title: "Contact Us",
-      drawerLabel: "Contact Us"
+      drawerLabel: "Contact Us",
+      drawerIcon: ({ tintColor }) =>
+      (
+        <Icon name="address-card"
+              type="font-awesome"
+              size={22}
+              color={tintColor}
+        />
+      )
     }
   }
 },
 {
-  drawerBackgroundColor: "#D1C4E9"
+  drawerBackgroundColor: "#D1C4E9",
+  //defines the layout of the drawer to be what's specified in CustomDrawerContentComponent
+  contentComponent: CustomDrawerContentComponent
 });
-
-//In react-navigation v3, an explicit navigator container must be declared.
-//In v2 the above MainNavigator represented a container in and of itself,
-//so it could be included with <MainNavigator />, but not anymore. This
-//MainNavigatorContainer wraps the MainNavigator and is used like <MainNavigatorContainer />
-//It also acts as a container for the child elements, Menu and HomeContainers.
-//See https://stackoverflow.com/questions/53367195/invariant-violation-the-navigation-prop-is-missing-for-this-navigator
-const MainNavigatorContainer = createAppContainer(MainNavigator);
 
 class Main extends Component
 {
@@ -143,10 +230,41 @@ class Main extends Component
       //onPress is the event for when a user presses on an element
       //If platform is Android, we will give enough space at the top for the statusBar
       <View style={{ flex: 1, paddingTop: Platform.OS ==="ios" ? 0 : Expo.Constants.statusBarHeight }}>
-        <MainNavigatorContainer />
+        <MainNavigator />
       </View>
     );
   }
 }
+
+const styles = StyleSheet.create({
+  container:
+  {
+    flex: 1
+  },
+
+  drawerHeader:
+  {
+    backgroundColor: "#512DA8",
+    height: 140,
+    alignItems: "center",
+    justifyContent: "center",
+    flex: 1,
+    flexDirection: "row"
+  },
+
+  drawerHeaderText:
+  {
+    color: "white",
+    fontSize: 24,
+    fontWeight: "bold",
+  },
+
+  drawerImage:
+  {
+    margin: 10,
+    width: 80,
+    height: 60
+  }
+})
 
 export default Main;
