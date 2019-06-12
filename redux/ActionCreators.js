@@ -6,7 +6,7 @@ export const fetchComments = () =>
 {
   return function(dispatch)
   {
-    return fetch(`baseUrl/${comments}`)
+    return fetch(`${baseUrl}/comments`)
     .then((response) =>
     {
       if (response.ok)
@@ -54,7 +54,7 @@ export const fetchDishes = () =>
   {
     dispatch(dishesLoading());
 
-    return fetch(`baseUrl/${dishes}`)
+    return fetch(`${baseUrl}/dishes`)
     .then((response) =>
     {
       if (response.ok)
@@ -109,7 +109,7 @@ export const fetchPromos = () =>
   {
     dispatch(promosLoading());
 
-    return fetch(`baseUrl/${promotions}`)
+    return fetch(`${baseUrl}/promotions`)
     .then((response) =>
     {
       if (response.ok)
@@ -164,7 +164,7 @@ export const fetchLeaders = () =>
   {
     dispatch(leadersLoading());
 
-    return fetch(`baseUrl/${leaders}`)
+    return fetch(`${baseUrl}/leaders`)
     .then((response) =>
     {
       if (response.ok)
