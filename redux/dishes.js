@@ -8,7 +8,7 @@ const initialState =
   dishes: []
 };
 
-export const dishes = (state = initialState, action)
+export const dishes = (state = initialState, action) =>
 {
   switch(action.type)
   {

@@ -8,7 +8,7 @@ const initialState =
   leaders: []
 };
 
-export const leaders = (state = initialState, action)
+export const leaders = (state = initialState, action) =>
 {
   switch(action.type)
   {

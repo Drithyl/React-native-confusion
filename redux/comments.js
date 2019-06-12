@@ -7,7 +7,7 @@ const initialState =
   comments: []
 };
 
-export const comments = (state = initialState, action)
+export const comments = (state = initialState, action) =>
 {
   switch(action.type)
   {
