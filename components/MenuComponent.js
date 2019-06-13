@@ -4,6 +4,7 @@ import { View, FlatList } from "react-native";
 import { Tile } from "react-native-elements";
 import { connect } from "react-redux";
 import { baseUrl } from "../shared/baseUrl";
+import { Loading } from "./LoadingComponent";
 
 const mapStateToProps = (state) =>
 {
@@ -46,6 +47,22 @@ class  Menu extends Component
         />
       );
     };
+
+    if (this.props.dishes.isLoading === true)
+    {
+      return (
+        <Loading />
+      );
+    }
+
+    if (this.props.dishes.errMess)
+    {
+      return (
+        <View>
+          <Text>{this.props.dishes.errMess}</Text>
+        </View>
+      );
+    }
 
     return (
       //FlatList will render an array of objects into a list of items,

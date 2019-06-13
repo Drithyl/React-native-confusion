@@ -4,6 +4,7 @@ import { ScrollView, View, Text } from "react-native";
 import { Card } from "react-native-elements";
 import { connect } from "react-redux";
 import { baseUrl } from "../shared/baseUrl";
+import { Loading } from "./LoadingComponent";
 
 const mapStateToProps = (state) =>
 {
@@ -17,6 +18,22 @@ const mapStateToProps = (state) =>
 function RenderItem(props)
 {
   const item = props.item;
+
+  if (props.isLoading)
+  {
+    return (
+      <Loading />
+    );
+  }
+
+  if (props.errMess)
+  {
+    return (
+      <View>
+        <Text>{props.errMess}</Text>
+      </View>
+    );
+  }
 
   if (item == null)
   {
@@ -49,9 +66,9 @@ class Home extends Component
   {
     return (
       <ScrollView>
-        <RenderItem item={this.props.dishes.dishes.find((dish) => dish.featured)} />
-        <RenderItem item={this.props.promotions.promotions.find((promo) => promo.featured)} />
-        <RenderItem item={this.props.leaders.leaders.find((leader) => leader.featured)} />
+        <RenderItem item={this.props.dishes.dishes.find((dish) => dish.featured)} isLoading={this.props.dishes.isLoading} errMess={this.props.dishes.errMess}/>
+        <RenderItem item={this.props.promotions.promotions.find((promo) => promo.featured)} isLoading={this.props.promotions.isLoading} errMess={this.props.promotions.errMess} />
+        <RenderItem item={this.props.leaders.leaders.find((leader) => leader.featured)} isLoading={this.props.leaders.isLoading} errMess={this.props.leaders.errMess} />
       </ScrollView>
     );
   }
