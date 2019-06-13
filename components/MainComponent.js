@@ -3,6 +3,8 @@ import React, { Component } from "react";
 import { View, Platform, Image, StyleSheet, ScrollView, Text } from "react-native";
 import { createStackNavigator, createDrawerNavigator, DrawerItems, SafeAreaView } from "react-navigation";
 import { Icon } from 'react-native-elements';
+import { connect } from "react-redux";
+import { fetchDishes, fetchComments, fetchPromos, fetchLeaders } from "../redux/ActionCreators";
 
 //import components
 import Menu from "./MenuComponent";
@@ -10,6 +12,37 @@ import DishDetail from "./DishDetailComponent";
 import Home from "./HomeComponent";
 import Contact from "./ContactComponent";
 import About from "./AboutComponent";
+
+const mapStateToProps = (state) =>
+{
+  return {
+  }
+};
+
+const mapDispatchToProps = (dispatch) =>
+{
+  return {
+    fetchDishes: () =>
+    {
+      return dispatch(fetchDishes())
+    },
+
+    fetchComments: () =>
+    {
+      return dispatch(fetchComments())
+    },
+
+    fetchPromos: () =>
+    {
+      return dispatch(fetchPromos())
+    },
+
+    fetchLeaders: () =>
+    {
+      return dispatch(fetchLeaders())
+    }
+  }
+};
 
 //specify screens to navigate through in the first parameter, in the form
 //of a JS Object. This is essentially a new component.
@@ -214,14 +247,12 @@ const MainNavigator = createDrawerNavigator({
 
 class Main extends Component
 {
-  constructor(props)
+  componentDidMount()
   {
-    super(props);
-  }
-
-  onDishSelect(dishId)
-  {
-    this.setState({ selectedDish: dishId });
+    this.props.fetchDishes();
+    this.props.fetchComments();
+    this.props.fetchPromos();
+    this.props.fetchLeaders();
   }
 
   render()
@@ -267,4 +298,4 @@ const styles = StyleSheet.create({
   }
 })
 
-export default Main;
+export default connect(mapStateToProps, mapDispatchToProps)(Main);

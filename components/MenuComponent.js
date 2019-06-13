@@ -1,19 +1,19 @@
 
 import React, { Component } from "react";
 import { View, FlatList } from "react-native";
-import { ListItem } from "react-native-elements";
-import { DISHES } from "../shared/dishes";
+import { Tile } from "react-native-elements";
+import { connect } from "react-redux";
+import { baseUrl } from "../shared/baseUrl";
+
+const mapStateToProps = (state) =>
+{
+  return {
+    dishes: state.dishes
+  }
+};
 
 class  Menu extends Component
 {
-  constructor(props)
-  {
-    super(props);
-    this.state =
-    {
-      dishes: DISHES
-    };
-  }
 
   //will ensure that in the statusBar inside MainComponent.js, when the Menu
   //component is displayed, the title that will be shown will be Menu
@@ -36,19 +36,13 @@ class  Menu extends Component
     {
       return (
         //Takes a key, as for any React element in a list.
-        //By default it puts a chevron in each element in the list
-        //(the iOS way of rendering a list), but we don't need it in
-        //android, so we can use the hideChevron attribute.
-        //The leftAvatar attribute allows us to specify an image. We
-        //can use node's require for a static source inside our project.
-        //https://react-native-training.github.io/react-native-elements/docs/listitem.html
-        <ListItem
+        <Tile
           key={index}
           title={item.name}
-          subtitle={item.description}
-          hideChevron={true}
+          caption={item.description}
+          featured
           onPress={() => navigate("DishDetail", { dishId: item.id })}
-          leftAvatar={{ source: require("./images/uthappizza.png") }}
+          imageSrc={{ source: { uri: `${baseUrl}${item.image}` } }}
         />
       );
     };
@@ -62,7 +56,7 @@ class  Menu extends Component
       //will extract one of the props of each item and use it as a
       //React key for its VirtualDOM rendering (expects a String).
       <FlatList
-        data={this.state.dishes}
+        data={this.props.dishes.dishes}
         renderItem={renderMenuItem}
         keyExtractor={item => item.id.toString()}
       />
@@ -70,4 +64,4 @@ class  Menu extends Component
   }
 }
 
-export default Menu;
+export default connect(mapStateToProps)(Menu);
