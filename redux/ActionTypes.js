@@ -10,3 +10,9 @@ export const PROMOS_FAILED = "PROMOS_FAILED";
 export const LEADERS_LOADING = "LEADERS_LOADING";
 export const ADD_LEADERS = "ADD_LEADERS";
 export const LEADERS_FAILED = "LEADERS_FAILED";
+
+//posts favorite to the server
+export const POST_FAVORITE = "POST_FAVORITE";
+
+//adds favorite to the store
+export const ADD_FAVORITE = "ADD_FAVORITE";

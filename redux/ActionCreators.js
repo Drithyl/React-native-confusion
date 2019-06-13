@@ -2,6 +2,7 @@
 import * as ActionTypes from "./ActionTypes";
 import { baseUrl } from "../shared/baseUrl";
 
+//thunk
 export const fetchComments = () =>
 {
   return function(dispatch)
@@ -48,6 +49,7 @@ export const addComments = (comments) =>
   };
 }
 
+//thunk
 export const fetchDishes = () =>
 {
   return function(dispatch)
@@ -103,6 +105,7 @@ export const addDishes = (dishes) =>
   };
 };
 
+//thunk
 export const fetchPromos = () =>
 {
   return function(dispatch)
@@ -158,6 +161,7 @@ export const addPromos = (promos) =>
   };
 };
 
+//thunk
 export const fetchLeaders = () =>
 {
   return function(dispatch)
@@ -211,4 +215,24 @@ export const addLeaders = (leaders) =>
     type: ActionTypes.ADD_LEADERS,
     payload: leaders
   };
+};
+
+//thunk
+export const postFavorite = (dishId) =>
+{
+  return function(dispatch)
+  {
+    setTimeout(() =>
+    {
+      dispatch(addFavorite(dishId));
+    }, 2000)
+  }
+};
+
+export const addFavorite = (dishId) =>
+{
+  return {
+    type: ActionTypes.ADD_FAVORITE,
+    payload: dishId
+  }
 };
