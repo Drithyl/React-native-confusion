@@ -47,7 +47,35 @@ export const addComments = (comments) =>
     type: ActionTypes.ADD_COMMENTS,
     payload: comments
   };
-}
+};
+
+export const postComment = (dishId, rating, author, comment) =>
+{
+  return function(dispatch)
+  {
+    let commentToAdd =
+    {
+      dishId,
+      rating,
+      author,
+      comment,
+      date: new Date().toISOString()
+    };
+
+    setTimeout(() =>
+    {
+      dispatch(addComment(commentToAdd));
+    }, 2000)
+  }
+};
+
+export const addComment = (comment) =>
+{
+  return {
+    type: ActionTypes.ADD_COMMENT,
+    payload: comment
+  }
+};
 
 //thunk
 export const fetchDishes = () =>
