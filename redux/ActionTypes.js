@@ -17,3 +17,4 @@ export const POST_FAVORITE = "POST_FAVORITE";
 
 //adds favorite to the store
 export const ADD_FAVORITE = "ADD_FAVORITE";
+export const DELETE_FAVORITE = "DELETE_FAVORITE";

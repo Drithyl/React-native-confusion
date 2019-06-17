@@ -5,12 +5,24 @@ import { ListItem } from "react-native-elements";
 import { connect } from "react-redux";
 import { baseUrl } from "../shared/baseUrl";
 import { Loading } from "./LoadingComponent";
+import Swipeout from "react-native-swipeout";
+import { deleteFavorite } from "../redux/ActionCreators";
 
 const mapStateToProps = (state) =>
 {
   return {
     dishes: state.dishes,
     favorites: state.favorites,
+  }
+};
+
+const mapDispatchToProps = (dispatch) =>
+{
+  return {
+    deleteFavorite: (dishId) =>
+    {
+      dispatch(deleteFavorite(dishId));
+    }
   }
 };
 
@@ -27,17 +39,29 @@ class Favorites extends Component
 
     const renderMenuItem = ({ item, index }) =>
     {
-      console.log(item);
+      const rightButton =
+      [
+        {
+          text: "Delete",
+          type: "delete",
+          onPress: () =>
+          {
+            this.props.deleteFavorite(item.id);
+          }
+        }
+      ];
 
       return(
-        <ListItem
-          key={index}
-          title={item.name}
-          subtitle={item.description}
-          hideChevron={true}
-          onPress={() => navigate("DishDetail", { dishId: item.id })}
-          leftAvatar={{ source: { uri: `${baseUrl}${item.image}`}}}
-        />
+        <Swipeout right={rightButton} autoClose={true}>
+          <ListItem
+            key={index}
+            title={item.name}
+            subtitle={item.description}
+            hideChevron={true}
+            onPress={() => navigate("DishDetail", { dishId: item.id })}
+            leftAvatar={{ source: { uri: `${baseUrl}${item.image}`}}}
+          />
+        </Swipeout>
       );
     }
 
@@ -57,9 +81,6 @@ class Favorites extends Component
       );
     }
 
-    console.log("filter test:");
-    console.log(this.props.dishes.dishes.filter((dish) => this.props.favorites.some((el) => el === dish.id)));
-
     return (
       <FlatList
         data={this.props.dishes.dishes.filter((dish) => this.props.favorites.some((el) => el === dish.id))}
@@ -70,4 +91,4 @@ class Favorites extends Component
   }
 }
 
-export default connect(mapStateToProps)(Favorites);
+export default connect(mapStateToProps, mapDispatchToProps)(Favorites);

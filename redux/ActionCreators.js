@@ -264,3 +264,11 @@ export const addFavorite = (dishId) =>
     payload: dishId
   }
 };
+
+export const deleteFavorite = (dishId) =>
+{
+  return {
+    type: ActionTypes.DELETE_FAVORITE,
+    payload: dishId
+  }
+}
