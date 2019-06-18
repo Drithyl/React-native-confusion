@@ -36,6 +36,8 @@ function RenderDish(props)
 {
   const dish = props.dish;
 
+  handleViewRef = ref => this.view = ref;
+
   //dx and dy are the distance traveled by the gesture of the user on screen
   const recognizeDrag = ({ moveX, moveY, dx, dy }) =>
   {
@@ -51,6 +53,15 @@ function RenderDish(props)
     onStartShouldSetPanResponder: (event, gestureState) =>
     {
       return true;
+    },
+
+    onPandResponderGrant: () =>
+    {
+      this.view.rubberBand(1000)
+      .then((endState) =>
+      {
+        console.log(endState.finished ? "finished" : "cancelled");
+      });
     },
 
     onPanResponderEnd: (event, gestureState) =>
@@ -89,6 +100,7 @@ function RenderDish(props)
 
   return (
     <Animatable.View animation="fadeInDown" duration={2000} delay={1000}
+      ref={this.handleViewRef}
       {...panResponder.panHandlers}
     >
       <Card
