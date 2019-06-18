@@ -5,6 +5,7 @@ import { ScrollView, FlatList, Text } from "react-native";
 import { connect } from "react-redux";
 import { baseUrl } from "../shared/baseUrl";
 import { Loading } from "./LoadingComponent";
+import * as Animatable from "react-native-animatable";
 
 const mapStateToProps = (state) =>
 {
@@ -71,29 +72,33 @@ class About extends Component
     {
       return (
         <ScrollView>
-          <History />
+          <Animatable.View animation="fadeInDown" duration={2000} delay={1000}>
+            <History />
 
-          <Card
-            title={"Corporate Leadership"}
-          >
-            <Text>{this.props.leaders.errMess}</Text>
-          </Card>
+            <Card
+              title={"Corporate Leadership"}
+            >
+              <Text>{this.props.leaders.errMess}</Text>
+            </Card>
+          </Animatable.View>
         </ScrollView>
       );
     }
 
     return (
       <ScrollView>
-        <History />
-        <Card
-          title={"Corporate Leadership"}
-        >
-          <FlatList
-            data={this.props.leaders.leaders}
-            renderItem={renderItem}
-            keyExtractor={(item) => item.id.toString()}
-          />
-        </Card>
+        <Animatable.View animation="fadeInDown" duration={2000} delay={1000}>
+          <History />
+          <Card
+            title={"Corporate Leadership"}
+          >
+            <FlatList
+              data={this.props.leaders.leaders}
+              renderItem={renderItem}
+              keyExtractor={(item) => item.id.toString()}
+            />
+          </Card>
+        </Animatable.View>
       </ScrollView>
     );
   }

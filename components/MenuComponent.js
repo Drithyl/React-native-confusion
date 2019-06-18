@@ -5,6 +5,7 @@ import { Tile } from "react-native-elements";
 import { connect } from "react-redux";
 import { baseUrl } from "../shared/baseUrl";
 import { Loading } from "./LoadingComponent";
+import * as Animatable from "react-native-animatable";
 
 const mapStateToProps = (state) =>
 {
@@ -36,15 +37,17 @@ class  Menu extends Component
     const renderMenuItem = ({ item, index }) =>
     {
       return (
-        //Takes a key, as for any React element in a list.
-        <Tile
-          key={index}
-          title={item.name}
-          caption={item.description}
-          featured
-          onPress={() => navigate("DishDetail", { dishId: item.id })}
-          imageSrc={{ source: { uri: `${baseUrl}${item.image}` } }}
-        />
+        <Animatable.View animation="fadeInRightBig" duration={2000}>
+          {/* Takes a key, as for any React element in a list. */}
+          <Tile
+            key={index}
+            title={item.name}
+            caption={item.description}
+            featured
+            onPress={() => navigate("DishDetail", { dishId: item.id })}
+            imageSrc={{ source: { uri: `${baseUrl}${item.image}` } }}
+          />
+      </Animatable.View>
       );
     };
 
