@@ -200,13 +200,9 @@ const LoginNavigator = createStackNavigator({
     headerTitleStyle: {
       color: "#fff"
     },
-    headerLeft:
-    <Icon
-      name="menu"
-      size={24}
-      color="white"
-      onPress={() => navigation.toggleDrawer()}
-    />
+    title: "Login",
+    headerTintColor: "#fff",
+    headerLeft: <Icon name="menu" suze={24} iconStyle={{ color: "white" }} onPress={ () => navigation.toggleDrawer() } />
   })
 });
 

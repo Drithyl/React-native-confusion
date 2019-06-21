@@ -45,7 +45,7 @@ class  Menu extends Component
             caption={item.description}
             featured
             onPress={() => navigate("DishDetail", { dishId: item.id })}
-            imageSrc={{ source: { uri: `${baseUrl}${item.image}` } }}
+            imageSrc={{ uri: `${baseUrl}${item.image}` }}
           />
       </Animatable.View>
       );
